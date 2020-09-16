@@ -1,7 +1,7 @@
 {
-  "name": "1-Passport-Example",
+  "name": "Show Me The Brews",
   "version": "1.0.0",
-  "description": "",
+  "description": "Local brewery search application",
   "main": "server.js",
   "scripts": {
     "test": "npm run lint",
@@ -10,8 +10,8 @@
     "fix": "eslint --fix .",
     "watch": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["beer", "brewery", "alcohol", "local drinks"],
+  "author": "JJC",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "2.4.3",
