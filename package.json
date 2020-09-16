@@ -1,5 +1,5 @@
 {
-  "name": "Show Me The Brews",
+  "name": "Show_Me_The_Brews",
   "version": "1.0.0",
   "description": "Local brewery search application",
   "main": "server.js",
