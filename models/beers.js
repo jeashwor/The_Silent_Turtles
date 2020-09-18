@@ -6,22 +6,5 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
-
-    Beers.associate = (models) => {
-        Beers.belongsTo(models.user, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
-
-    Beers.associate = (models) => {
-        Beers.belongsTo(models.brewery, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
-
     return Beers;
 };
