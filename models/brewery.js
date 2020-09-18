@@ -23,12 +23,8 @@ module.exports = (sequelize, DataTypes) => {
                 isDecimal: true,
             }
         },
-        beer_list: {
-            type: DataTypes.ARRAY,
-            allowNull: true,
-        },
         website_url: {
-            type: DataTypes.VARCHAR(2083),
+            type: DataTypes.TEXT,
             allowNull: false,
         }
     });
