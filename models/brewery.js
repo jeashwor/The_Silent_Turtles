@@ -1,3 +1,5 @@
+const beers = require("./beers");
+
 // Creating our Brewery model
 module.exports = (sequelize, DataTypes) => {
     const Brewery = sequelize.define("Brewery", {
@@ -26,6 +28,12 @@ module.exports = (sequelize, DataTypes) => {
         website_url: {
             type: DataTypes.TEXT,
             allowNull: false,
+        }
+    });
+    Brewery.hasMany(models.Beers, { as: "beers" });
+    Beers.belongsTo(Brewery, {
+        foreignKey: {
+            allowNull: false
         }
     });
     return Brewery;
