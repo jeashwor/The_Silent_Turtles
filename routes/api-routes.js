@@ -26,7 +26,6 @@ module.exports = function(app) {
       password: req.body.password,
       zipCode: req.body.zipCode,
       favoriteBreweryType: req.body.favBreweryType,
-      admin: false
     })
       .then(() => {
         res.redirect(307, "/api/login");

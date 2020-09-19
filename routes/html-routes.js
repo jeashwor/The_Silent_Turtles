@@ -3,6 +3,7 @@ const path = require("path");
 
 // Requiring our custom middleware for checking if a user is logged in
 const isAuthenticated = require("../config/middleware/isAuthenticated");
+const isAdmin = require("../config/middleware/isAdmin");
 
 module.exports = function(app) {
   app.get("/", (req, res) => {
@@ -23,6 +24,10 @@ module.exports = function(app) {
 
   app.get("/nonMember", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/mapmarker.html"));
+  });
+
+  app.get("/admin", isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/admin.html"));
   });
 
   // Here we've add our isAuthenticated middleware to this route.

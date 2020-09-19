@@ -35,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     admin: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
   User.prototype.validPassword = function(password) {
@@ -48,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
       bcrypt.genSaltSync(10),
       null
     );
+    if (user.name === "admin" && user.email === "admin@email.com") {
+      user.admin = true;
+    }
   });
 
   User.associate = function(models) {
