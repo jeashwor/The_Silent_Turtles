@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    zip_code: {
+    zipCode: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         len: [5, 5]
       }
     },
-    favorite_brewery_type: {
+    favoriteBreweryType: {
       type: DataTypes.STRING,
       allowNull: true,
     },
