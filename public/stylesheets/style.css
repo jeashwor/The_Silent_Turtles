@@ -13,6 +13,14 @@ background-size: cover;
 transition: 1s opacity;
 }
 
+.navbar {
+  background-color: rgb(255,188, 0);
+}
+
+.navbar-brand {
+  color: black;
+}
+
 form.signup,
 form.login {
   margin-top: 20px;
