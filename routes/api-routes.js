@@ -1,6 +1,11 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+<<<<<<< HEAD
+=======
+// const axios = require("axios");
+// const states = require("../states.json");
+>>>>>>> ad94148b91b172dcc5389b30923795d4fbb27547
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.

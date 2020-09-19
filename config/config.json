@@ -1,8 +1,13 @@
 {
   "development": {
     "username": "root",
+<<<<<<< HEAD
     "password": "catahoula",
     "database": "brews",
+=======
+    "password": "root",
+    "database": "beers_db",
+>>>>>>> ad94148b91b172dcc5389b30923795d4fbb27547
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

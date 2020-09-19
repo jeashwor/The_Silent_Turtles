@@ -1,4 +1,4 @@
-// Requiring bcrypt for password hashing. Using the bcryptjs version as the regular bcrypt module sometimes causes errors on Windows machines	
+// Requiring bcrypt for password hashing. Using the bcryptjs version as the regular bcrypt module sometimes causes errors on Windows machines
 const bcrypt = require("bcryptjs");
 const beers = require("./beers");
 
@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isInt: true,
-        // msg: "Your zip code must ",
         len: [5, 5]
       }
     },
@@ -36,8 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     admin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
+      type: DataTypes.BOOLEAN
     }
   });
   User.prototype.validPassword = function(password) {
@@ -52,12 +50,9 @@ module.exports = (sequelize, DataTypes) => {
     );
   });
 
-  // User.hasMany(models.Beers, { as: "beers" });
-  // Beers.belongsTo(User, {
-  //   foreignKey: {
-  //     allowNull: false
-  //   }
-  // });
+  User.associate = function(models) {
+    User.hasMany(models.Beers, { as: "beers" });
+  };
 
   return User;
 };
