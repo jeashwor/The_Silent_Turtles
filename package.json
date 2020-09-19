@@ -10,10 +10,16 @@
     "fix": "eslint --fix .",
     "watch": "nodemon server.js"
   },
-  "keywords": ["beer", "brewery", "alcohol", "local drinks"],
+  "keywords": [
+    "beer",
+    "brewery",
+    "alcohol",
+    "local drinks"
+  ],
   "author": "JJC",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.20.0",
     "bcryptjs": "2.4.3",
     "express": "^4.17.0",
     "express-session": "^1.16.1",

@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "catahoula",
-    "database": "passport_demo",
+    "database": "brews",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

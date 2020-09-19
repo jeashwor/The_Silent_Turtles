@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
@@ -27,19 +27,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isInt: true,
-        msg: "Your zip code must ",
+        // msg: "Your zip code must ",
         len: [5, 5]
       }
     },
     favoriteBreweryType: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     admin: {
       type: DataTypes.BOOLEAN,
+      allowNull: true
     }
   });
-  User.prototype.validPassword = function (password) {
+  User.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
   };
 
