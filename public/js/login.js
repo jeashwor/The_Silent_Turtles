@@ -3,11 +3,8 @@ $(document).ready(() => {
   const loginForm = $("form.login");
   const emailInput = $("input#email-input");
   const passwordInput = $("input#password-input");
-  const createUserBtn = $("#createUser");
-
-  createUserBtn.on("create", event => {
-    event.preventDefault();
-    window.location.replace("/signup");
+  $("#createUser").click(() => {
+    window.location.replace("/");
   });
 
   // When the form is submitted, we validate there's an email and password entered
