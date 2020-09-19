@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "catahoula",
-    "database": "passport_demo",
+    "password": "root",
+    "database": "beers_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
