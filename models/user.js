@@ -51,12 +51,12 @@ module.exports = (sequelize, DataTypes) => {
     );
   });
 
-  User.hasMany(models.Beers, { as: "beers" });
-  Beers.belongsTo(User, {
-    foreignKey: {
-      allowNull: false
-    }
-  });
+  // User.hasMany(models.Beers, { as: "beers" });
+  // Beers.belongsTo(User, {
+  //   foreignKey: {
+  //     allowNull: false
+  //   }
+  // });
 
   return User;
 };
