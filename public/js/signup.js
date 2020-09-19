@@ -33,7 +33,7 @@ $(document).ready(() => {
   // Otherwise we log any errors
   function signUpUser(userData) {
     $.post("/api/signup", {
-      userName: userData.userName,
+      name: userData.userName,
       email: userData.email,
       password: userData.password,
       zipCode: userData.zipCode,
