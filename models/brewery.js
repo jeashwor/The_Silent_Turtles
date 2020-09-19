@@ -1,4 +1,4 @@
-const beers = require("./beers");
+const db = require("../models");
 
 // Creating our Brewery model
 module.exports = (sequelize, DataTypes) => {
@@ -30,11 +30,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         }
     });
-    Brewery.hasMany(models.Beers, { as: "beers" });
-    Beers.belongsTo(Brewery, {
-        foreignKey: {
-            allowNull: false
-        }
-    });
+    // Brewery.hasMany(db.beers, { onDelete: "cascade" });
+    // Beers.belongsTo(Brewery, {
+    //     foreignKey: {
+    //         allowNull: false
+    //     }
+    // });
     return Brewery;
 };
