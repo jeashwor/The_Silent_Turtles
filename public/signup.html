@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Passport Authentication</title>
+  <title>SHOW ME THE BREWS - New User</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
@@ -13,18 +13,47 @@
   <video poster="./assets/beerBubbles.png" id="bgvid" playsinline autoplay muted loop>
     <source src="./assets/beerBubbles.mp4" type="video/mp4">
   </video>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/logout">
+          Just SHOW ME THE BREWS
+        </a>
+      </div>
+    </div>
+  </nav>
   <div class="container" id="formBlock">
     <div class="row">
       <div class="col-md-12 ">
-        <h2>Sign Up Form</h2>
+        <h2 class="text-center">Create Account</h2>
         <form class="signup">
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="email-input" placeholder="Email">
+            <label for="userName">Create Username</label>
+            <input type="text" class="form-control" id="userName" placeholder="Username">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="password-input" placeholder="Password">
+            <label for="inputEmail">Enter Email address</label>
+            <input type="email" class="form-control" id="emailInput" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">Create Password</label>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="zipCodeInput">Enter Zip Code</label>
+            <input type="text" class="form-control" id="zipCode" placeholder="Zip Code">
+          </div>
+          <div class="form-group">
+            <label for="favBreweryType">Choose a favorite brewery type.</label>
+            <select class="form-control" id="favBreweryType">
+              <option>micro</option>
+              <option>regional</option>
+              <option>brewpub</option>
+              <option>large</option>
+              <option>bar</option>
+              <option>contract</option>
+              <option>proprietor</option>
+            </select>
           </div>
           <div style="display: none" id="alert" class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

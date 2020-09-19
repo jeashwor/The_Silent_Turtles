@@ -15,7 +15,7 @@ transition: 1s opacity;
 
 form.signup,
 form.login {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 #formBlock {
