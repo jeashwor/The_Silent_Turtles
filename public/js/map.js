@@ -1,10 +1,15 @@
+const user = require("../../models/user");
+
 //Globals
 let map,
   states,
   userLat,
   userLong;
 let markers = [];
-let memberZipCode = user.zipCode;
+let memberZipCode = () => {
+  $.get("/api/user_data");
+  return user.zipCode;
+};
 // let nonMemberZipCode = $("#nonMemberZipCode").val();
 
 async function breweries(city, stateName) {
