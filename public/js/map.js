@@ -1,6 +1,11 @@
 //Globals
-let map;
-let states;
+let map,
+  states,
+  userLat,
+  userLong;
+let markers = [];
+let memberZipCode = user.zipCode;
+// let nonMemberZipCode = $("#nonMemberZipCode").val();
 
 async function breweries(city, stateName) {
   const url =
@@ -10,21 +15,20 @@ async function breweries(city, stateName) {
     stateName +
     "&per_page=50";
   const res = await $.get(url);
-  //console.log(res.data);
   return res.data.filter(
     x => x.brewery_type !== "planning" && x.latitude !== null
   );
 }
 
-async function userZipCode(zipCode) {
+async function userZipCode(memberZipCode) {
   try {
     const clientKey =
-      "Ez9Rro9HCYnywWiEiSljGWM9oO69YSKFWh58p0WjAL1CBhEjIo7FsDGesuor38Ev";
+      "js-372sPZt0JF7Jk43Lovlab0Ejmn9eTiZ7VycR1it9VrC5U1IIZCP5Kuvde8gwLZXx";
     const url =
       "https://www.zipcodeapi.com/rest/" +
       clientKey +
       "/info.json/" +
-      zipCode +
+      memberZipCode +
       "/radians"; // need to pass in user input
     const res = await $.get(url);
     return res.data;
@@ -36,14 +40,14 @@ async function userZipCode(zipCode) {
 $.getJSON("/data/states.json")
   .then(data => {
     states = data;
-    return userZipCode("30114");
+    return userZipCode(zipCode);
   })
   .then(res => {
     console.log(res);
     const stateCode = res.state;
     const city = res.city;
-    const longitude = res.lng;
-    const latitude = res.lat;
+    userLong = res.lng;
+    userLat = res.lat;
     let stateName;
 
     for (const key in states) {
@@ -51,15 +55,24 @@ $.getJSON("/data/states.json")
         stateName = `${states[key]}`;
       }
     }
-    return getBreweries(city, stateName);
+    return breweries(city, stateName);
   })
   .then(breweryList => {
     console.log(breweryList);
-    console.log(longitude);
-    console.log(latitude);
+    console.log(breweryLat);
+    console.log(breweryLong);
     //center map based on the zipCode we were given by the user
-
     //use breweryList to add map markers to our map
+    for (let i = 0; i < breweryList.length; i++) {
+      markers[i] = new google.maps.Marker({
+        position: {
+          lat: breweryList[i].latitude,
+          lng: breweryList[i].longitude
+        },
+        map: map
+      });
+    };
+    console.log(markers);
   })
   .catch(err => console.log(err));
 
@@ -67,8 +80,7 @@ $.getJSON("/data/states.json")
 function initMap() {
   const mapConfig = {};
   mapConfig.zoom = 15;
-  // mapConfig.center = {lat: -34.397, lng: 150.644}
-  if (navigator.geolocation) {
+  if (!memberZipCode && !nonMemberZipCode) {
     navigator.geolocation.getCurrentPosition(position => {
       console.log(position.coords.latitude);
       mapConfig.center = {
@@ -78,17 +90,17 @@ function initMap() {
       map = new google.maps.Map(document.getElementById("map"), mapConfig);
     });
   }
-  // for (let i = 0; i < breweries.breweryList.length; i++) {
-  //   marker = new google.maps.Marker({
-  //     position: {
-  //       lat: breweries.breweryList[i].latitude,
-  //       lng: breweries.breweryList[i].longitude
-  //     },
-  //     map: map
-  //   });
-  // }
-}
+  else if (memberZipCode) {
+    mapConfig.center = {
+      lat: userLat,
+      lng: userLong
+    };
+    markers.forEach(marker => {
+      new google.maps.Marker({position: {lat: marker.lat, lng: marker.lng}, map: map})
+    });
+  }
 
-/* <script defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc4zOKsWDDNrNX567-_LsnKiOLabv9A3A&callback=initMap">
-  </script> THIS NEEDS TO BE ADDED TO THE HTML FILE THAT HOSTS THE MAP */
+  // else if (nonMemberZipCode) {
+
+  // }
+};
