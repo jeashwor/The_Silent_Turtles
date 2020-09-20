@@ -6,10 +6,12 @@ let map,
   userLat,
   userLong;
 let markers = [];
-let memberZipCode = () => {
+
+const getMemberZip = () => {
   $.get("/api/user_data");
-  return user.zipCode;
+  memberZipCode = user.zipCode;
 };
+let memberZipCode = getMemberZip;
 // let nonMemberZipCode = $("#nonMemberZipCode").val();
 
 async function breweries(city, stateName) {
