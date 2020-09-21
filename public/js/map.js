@@ -1,15 +1,13 @@
-// const user = require("../../models/user");
-
 //Globals
-let map, states, userLat, userLong, memberZipCode;
-const markers = [];
+let map, states, userLat, userLong;
+let markers = [];
 
 const getMemberZip = () => {
   $.get("/api/user_data").then(user => {
     memberZipCode = user.zipCode;
-    console.log(memberZipCode);
   });
 };
+let memberZipCode = getMemberZip();
 
 // let nonMemberZipCode = $("#nonMemberZipCode").val();
 
@@ -21,12 +19,11 @@ async function breweries(city, stateName) {
     stateName +
     "&per_page=50";
   const res = await $.get(url);
-  return res.data.filter(
-    x => x.brewery_type !== "planning" && x.latitude !== null
-  );
+  console.log(res);
+  return res.filter(x => x.brewery_type !== "planning" && x.latitude !== null);
 }
 
-async function userZipCode(memberZipCode) {
+async function userZipCode(zipCode) {
   try {
     const clientKey =
       "Ez9Rro9HCYnywWiEiSljGWM9oO69YSKFWh58p0WjAL1CBhEjIo7FsDGesuor38Ev";
@@ -34,10 +31,10 @@ async function userZipCode(memberZipCode) {
       "https://www.zipcodeapi.com/rest/" +
       clientKey +
       "/info.json/" +
-      memberZipCode +
+      zipCode +
       "/radians"; // need to pass in user input
     const res = await $.get(url);
-    return res.data;
+    return res;
   } catch (err) {
     console.log(err);
     return err;
@@ -65,19 +62,17 @@ $.getJSON("/data/states.json")
   })
   .then(breweryList => {
     console.log(breweryList);
-    console.log(breweryLat);
-    console.log(breweryLong);
     //center map based on the zipCode we were given by the user
     //use breweryList to add map markers to our map
-    for (let i = 0; i < breweryList.length; i++) {
-      markers[i] = new google.maps.Marker({
+    breweryList.forEach(brewery => {
+      const markerObj = {
         position: {
-          lat: breweryList[i].latitude,
-          lng: breweryList[i].longitude
-        },
-        map: map
-      });
-    }
+          lat: brewery.latitude,
+          lng: brewery.longitude
+        }
+      };
+      markers.push(markerObj);
+    });
     console.log(markers);
   })
   .catch(err => console.log(err));
