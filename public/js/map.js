@@ -1,17 +1,16 @@
-const user = require("../../models/user");
+// const user = require("../../models/user");
 
 //Globals
-let map,
-  states,
-  userLat,
-  userLong;
-let markers = [];
+let map, states, userLat, userLong, memberZipCode;
+const markers = [];
 
 const getMemberZip = () => {
-  $.get("/api/user_data");
-  memberZipCode = user.zipCode;
+  $.get("/api/user_data").then(user => {
+    memberZipCode = user.zipCode;
+    console.log(memberZipCode);
+  });
 };
-let memberZipCode = getMemberZip;
+
 // let nonMemberZipCode = $("#nonMemberZipCode").val();
 
 async function breweries(city, stateName) {
@@ -30,7 +29,7 @@ async function breweries(city, stateName) {
 async function userZipCode(memberZipCode) {
   try {
     const clientKey =
-      "js-372sPZt0JF7Jk43Lovlab0Ejmn9eTiZ7VycR1it9VrC5U1IIZCP5Kuvde8gwLZXx";
+      "Ez9Rro9HCYnywWiEiSljGWM9oO69YSKFWh58p0WjAL1CBhEjIo7FsDGesuor38Ev";
     const url =
       "https://www.zipcodeapi.com/rest/" +
       clientKey +
@@ -47,7 +46,7 @@ async function userZipCode(memberZipCode) {
 $.getJSON("/data/states.json")
   .then(data => {
     states = data;
-    return userZipCode(zipCode);
+    return userZipCode(memberZipCode);
   })
   .then(res => {
     console.log(res);
@@ -78,7 +77,7 @@ $.getJSON("/data/states.json")
         },
         map: map
       });
-    };
+    }
     console.log(markers);
   })
   .catch(err => console.log(err));
@@ -96,18 +95,20 @@ function initMap() {
       };
       map = new google.maps.Map(document.getElementById("map"), mapConfig);
     });
-  }
-  else if (memberZipCode) {
+  } else if (memberZipCode) {
     mapConfig.center = {
       lat: userLat,
       lng: userLong
     };
     markers.forEach(marker => {
-      new google.maps.Marker({position: {lat: marker.lat, lng: marker.lng}, map: map})
+      new google.maps.Marker({
+        position: { lat: marker.lat, lng: marker.lng },
+        map: map
+      });
     });
   }
 
   // else if (nonMemberZipCode) {
 
   // }
-};
+}
