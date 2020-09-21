@@ -1,6 +1,6 @@
 //Globals
 let map, states, userLat, userLong;
-const markers = [];
+let markers = [];
 
 const getMemberZip = () => {
   $.get("/api/user_data").then(user => {
@@ -23,7 +23,7 @@ async function breweries(city, stateName) {
   return res.filter(x => x.brewery_type !== "planning" && x.latitude !== null);
 }
 
-async function userZipCode(memberZipCode) {
+async function userZipCode(zipCode) {
   try {
     const clientKey =
       "js-372sPZt0JF7Jk43Lovlab0Ejmn9eTiZ7VycR1it9VrC5U1IIZCP5Kuvde8gwLZXx";
@@ -31,7 +31,7 @@ async function userZipCode(memberZipCode) {
       "https://www.zipcodeapi.com/rest/" +
       clientKey +
       "/info.json/" +
-      memberZipCode +
+      zipCode +
       "/radians"; // need to pass in user input
     const res = await $.get(url);
     return res;
