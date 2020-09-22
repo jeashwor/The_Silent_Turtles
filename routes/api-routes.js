@@ -59,8 +59,12 @@ module.exports = function(app) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
+        name: req.user.name,
         id: req.user.id,
-        zipCode: req.user.zipCode
+        zipCode: req.user.zipCode,
+        admin: req.user.admin,
+        createdAt: req.user.createdAt,
+        updatedAt: req.user.updatedAt
       });
     }
   });
