@@ -25,7 +25,7 @@ module.exports = function(app) {
       email: req.body.email,
       password: req.body.password,
       zipCode: req.body.zipCode,
-      favoriteBreweryType: req.body.favBreweryType,
+      favoriteBreweryType: req.body.favBreweryType
     })
       .then(() => {
         res.redirect(307, "/api/login");
@@ -34,6 +34,13 @@ module.exports = function(app) {
         console.log(JSON.stringify(err));
         res.status(401).json(err);
       });
+  });
+
+  // Route for getting all users for admin display
+  app.get("/api/admin", (req, res) => {
+    db.User.findAll({}).then(dbUsers => {
+      res.json(dbUsers);
+    });
   });
 
   // Route for logging user out
@@ -52,8 +59,40 @@ module.exports = function(app) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id
+        name: req.user.name,
+        id: req.user.id,
+        zipCode: req.user.zipCode,
+        admin: req.user.admin,
+        createdAt: req.user.createdAt,
+        updatedAt: req.user.updatedAt
       });
     }
+  });
+
+  app.delete("/api/admin/:id", (req, res) => {
+    console.log(req.params.id);
+    db.User.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(dbUsers => {
+      res.json(dbUsers);
+    });
+  });
+
+  app.put("/api/admin/:id", (req, res) => {
+    console.log(req.params.id);
+    db.User.update(
+      {
+        admin: true
+      },
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(dbUsers => {
+      res.json(dbUsers);
+    });
   });
 };
