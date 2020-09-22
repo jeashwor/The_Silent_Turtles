@@ -25,7 +25,7 @@ module.exports = function(app) {
       email: req.body.email,
       password: req.body.password,
       zipCode: req.body.zipCode,
-      favoriteBreweryType: req.body.favBreweryType,
+      favoriteBreweryType: req.body.favBreweryType
     })
       .then(() => {
         res.redirect(307, "/api/login");
@@ -36,6 +36,10 @@ module.exports = function(app) {
       });
   });
 
+  // Route for getting all users for admin display
+  app.get("/api/admin" , (req, res) => {
+
+  });
   // Route for logging user out
   app.get("/logout", (req, res) => {
     req.logout();
