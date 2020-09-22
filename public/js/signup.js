@@ -21,7 +21,6 @@ $(document).ready(() => {
     if (!userData.userName || !userData.email || !userData.password || !userData.zipCode) {
       return;
     }
-    // If we have an email and password, run the signUpUser function
     signUpUser(userData);
     emailInput.val("");
     passwordInput.val("");
