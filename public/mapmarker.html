@@ -10,9 +10,9 @@
     </style>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script type="text/javascript" src="/js/map.js"></script>
-    <script defer
+    <!-- <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc4zOKsWDDNrNX567-_LsnKiOLabv9A3A&callback=initMap">
-    </script>
+    </script> -->
   </head>
   <body>
     <h3>My Google Maps Demo</h3>
@@ -25,6 +25,12 @@
     * The key parameter will contain your own API key (which is not needed for this tutorial)
     * The callback parameter executes the initMap() function
     -->
-
+    <script>
+    const script = document.createElement('script');
+    script.defer = true;
+    script.async = true;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.API_KEY}&callback=initMap`;
+    document.appendChild(script);
+  </script>
   </body>
 </html>
