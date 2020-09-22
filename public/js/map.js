@@ -25,8 +25,7 @@ async function breweries(city, stateName) {
 
 async function userZipCode(zipCode) {
   try {
-    const clientKey =
-      "js-372sPZt0JF7Jk43Lovlab0Ejmn9eTiZ7VycR1it9VrC5U1IIZCP5Kuvde8gwLZXx";
+    const clientKey = process.env.ZIPCODE_API_KEY;
     const url =
       "https://www.zipcodeapi.com/rest/" +
       clientKey +
