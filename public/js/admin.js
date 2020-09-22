@@ -23,7 +23,11 @@ $(document).ready(() => {
           user.createdAt +
           "</td><td>" +
           user.updatedAt +
-          "</td>"
+          "</td><td><button class='admin" +
+          user.id +
+          "'>Admin</button></td><td><button class='delete" +
+          user.id +
+          "'>Delete</button></td>"
       );
     });
     // $("#userList")
