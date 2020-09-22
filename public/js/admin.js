@@ -1,10 +1,13 @@
 $(document).ready(() => {
+  let currentUsers;
+
   $.get("/api/user_data").then(data => {
     $(".member-name").text(data.name);
   });
 
   $.get("/api/admin").then(data => {
-    console.log(data);
+    currentUsers = data;
+    // console.log(data);
     data.forEach(user => {
       $("#userList").append(
         "<tr><td>" +
@@ -46,12 +49,19 @@ $(document).ready(() => {
     event.preventDefault();
     const id = $(this).data("id");
     console.log(id);
-    $.ajax({
-      method: "PUT",
-      url: "/api/admin/" + id
-    }).then(window.location.reload());
-  }
+    if (currentUsers[id] === false) {
+      $.ajax({
+        method: "PUT",
+        url: "/api/admin/" + id
+      }).then(window.location.reload());
+    } else {
+      $.ajax({
+        method: "PUT",
+        url: "/api/admin/" + id
+      }).then(window.location.reload());
+    }
 
-  $(document).on("click", ".delete", deleteUser);
-  $(document).on("click", ".admin", updateUserAdmin);
+    $(document).on("click", ".delete", deleteUser);
+    $(document).on("click", ".admin", updateUserAdmin);
+  }
 });

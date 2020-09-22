@@ -32,3 +32,8 @@ form.login {
   margin-top: 100px;
   border-radius: 15px;  
 }
+
+#map {
+  height: 600px !important;
+  position: fixed !important;
+}
