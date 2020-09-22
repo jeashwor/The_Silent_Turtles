@@ -84,7 +84,7 @@ module.exports = function(app) {
     console.log(req.params.id);
     db.User.update(
       {
-        admin: true
+        admin: 1
       },
       {
         where: {

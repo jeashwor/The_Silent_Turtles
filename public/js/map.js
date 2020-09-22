@@ -2,8 +2,8 @@
 let states, userLat, userLong, nonMemberZipCode, memberZipCode;
 const markers = [];
 
-const getMemberZip = () => {
-  $.get("/api/user_data").then(user => {
+const getMemberZip = async () => {
+  await $.get("/api/user_data").then(user => {
     memberZipCode = user.zipCode;
   });
 };
