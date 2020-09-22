@@ -13,6 +13,11 @@ background-size: cover;
 transition: 1s opacity;
 }
 
+#map {
+  height: 600px !important;
+  position: fixed;
+}
+
 .navbar {
   background-color: rgb(255,188, 0);
 }
