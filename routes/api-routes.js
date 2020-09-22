@@ -68,4 +68,31 @@ module.exports = function(app) {
       });
     }
   });
+
+  app.delete("/api/admin/:id", (req, res) => {
+    console.log(req.params.id);
+    db.User.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(dbUsers => {
+      res.json(dbUsers);
+    });
+  });
+
+  app.put("/api/admin/:id", (req, res) => {
+    console.log(req.params.id);
+    db.User.update(
+      {
+        admin: true
+      },
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+    ).then(dbUsers => {
+      res.json(dbUsers);
+    });
+  });
 };

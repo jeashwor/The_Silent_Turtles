@@ -23,13 +23,35 @@ $(document).ready(() => {
           user.createdAt +
           "</td><td>" +
           user.updatedAt +
-          "</td><td><button class='admin" +
+          "</td><td><button class='admin' data-id='" +
           user.id +
-          "'>Admin</button></td><td><button class='delete" +
+          "'>Admin</button></td><td><button class='delete' data-id='" +
           user.id +
           "'>Delete</button></td>"
       );
     });
-    // $("#userList")
   });
+
+  function deleteUser(event) {
+    event.preventDefault();
+    const id = $(this).data("id");
+    console.log(id);
+    $.ajax({
+      method: "DELETE",
+      url: "/api/admin/" + id
+    }).then(window.location.reload());
+  }
+
+  function updateUserAdmin(event) {
+    event.preventDefault();
+    const id = $(this).data("id");
+    console.log(id);
+    $.ajax({
+      method: "PUT",
+      url: "/api/admin/" + id
+    }).then(window.location.reload());
+  }
+
+  $(document).on("click", ".delete", deleteUser);
+  $(document).on("click", ".admin", updateUserAdmin);
 });
