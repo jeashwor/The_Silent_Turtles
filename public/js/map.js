@@ -25,8 +25,7 @@ async function breweries(city, stateName) {
 
 async function userZipCode(zipCode) {
   try {
-    const clientKey =
-      "js-372sPZt0JF7Jk43Lovlab0Ejmn9eTiZ7VycR1it9VrC5U1IIZCP5Kuvde8gwLZXx";
+    const clientKey = "js-372sPZt0JF7Jk43Lovlab0Ejmn9eTiZ7VycR1it9VrC5U1IIZCP5Kuvde8gwLZXx";
     const url =
       "https://www.zipcodeapi.com/rest/" +
       clientKey +
@@ -81,40 +80,28 @@ $.getJSON("/data/states.json")
 function initMap(memberZipCode, nonMemberZipCode, markers, userLat, userLong) {
   const mapConfig = {};
   mapConfig.zoom = 15;
-  let map;
-
-      function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: {
-            lat: -34.397,
-            lng: 150.644
-          },
-          zoom: 8
-        });
-      }
-  // if (!memberZipCode && !nonMemberZipCode) {
-  //   console.log("getting by geolocation");
-  //   navigator.geolocation.getCurrentPosition(position => {
-  //     console.log(position.coords.latitude);
-  //     mapConfig.center = {
-  //       lat: position.coords.latitude,
-  //       lng: position.coords.longitude
-  //     };
-  //     map = new google.maps.Map(document.getElementById("map"), mapConfig);
-  //   });
-  // } else if (memberZipCode) {
-  //   console.log("using memberZip");
-  //   mapConfig.center = {
-  //     lat: userLat,
-  //     lng: userLong
-  //   };
-  //   markers.forEach(marker => {
-  //     new google.maps.Marker({
-  //       position: { lat: marker.lat, lng: marker.lng },
-  //       map: map
-  //     });
-  //   });
-  // }
+  if (!memberZipCode) {
+    navigator.geolocation.getCurrentPosition(position => {
+      console.log(position.coords.latitude);
+      console.log(position.coords.longitude);
+      mapConfig.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      map = new google.maps.Map(document.getElementById("map"), mapConfig);
+    });
+  } else if (memberZipCode) {
+    mapConfig.center = {
+      lat: userLat,
+      lng: userLong
+    };
+    markers.forEach(marker => {
+      new google.maps.Marker({
+        position: { lat: marker.lat, lng: marker.lng },
+        map: map
+      });
+    });
+  }
 
   // else if (nonMemberZipCode) {
 
