@@ -37,9 +37,12 @@ module.exports = function(app) {
   });
 
   // Route for getting all users for admin display
-  app.get("/api/admin" , (req, res) => {
-
+  app.get("/api/admin", (req, res) => {
+    db.User.findAll({}).then(dbUsers => {
+      res.json(dbUsers);
+    });
   });
+
   // Route for logging user out
   app.get("/logout", (req, res) => {
     req.logout();
