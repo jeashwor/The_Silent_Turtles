@@ -1,14 +1,15 @@
 //Globals
-let map, states, userLat, userLong;
+let map, userLat, userLong, memberZipCode;
 // eslint-disable-next-line prefer-const
 let markers = [];
 
-const getMemberZip = () => {
-  $.get("/api/user_data").then(user => {
-    memberZipCode = user.zipCode;
+async function getMemberZip() {
+  $.get("/api/user_data").then(data => {
+    memberZipCode = data.zipCode;
+    console.log(memberZipCode);
   });
-};
-let memberZipCode = getMemberZip();
+}
+// let memberZipCode = getMemberZip();
 
 // let nonMemberZipCode = $("#nonMemberZipCode").val();
 
@@ -34,11 +35,8 @@ async function userZipCode(zipCode) {
     return err;
   }
 }
-$.getJSON("/data/states.json")
-  .then(data => {
-    states = data;
-    return userZipCode(memberZipCode);
-  })
+getMemberZip()
+  .then(userZipCode(memberZipCode))
   .then(res => {
     const state = res.places[0].state;
     const city = res.places[0]["place name"];
@@ -62,6 +60,10 @@ $.getJSON("/data/states.json")
     console.log(markers);
   })
   .catch(err => console.log(err));
+
+function getMap() {
+  getMemberZip().then(initMap);
+}
 
 // eslint-disable-next-line no-unused-vars
 function initMap() {
