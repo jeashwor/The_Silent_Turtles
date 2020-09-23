@@ -4,6 +4,7 @@ let map, userLong, userLat, userZip;
 let markers = [];
 // eslint-disable-next-line prefer-const
 let userVals = [];
+let highestZIndex = 0;
 
 async function getMemberZip() {
   $.get("/api/user_data").then(user => {
@@ -99,6 +100,7 @@ function newInitMap(userVals) {
       lng: userVals[0]
     };
     map = new google.maps.Map(document.getElementById("map"), mapConfig);
+    let i = 0;
     markers.forEach(brewery => {
       marker = new google.maps.Marker({
         position: {
@@ -117,7 +119,19 @@ function newInitMap(userVals) {
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(11, 40)
         },
+        optimized: false,
+        zIndex: i,
         map: map
+      });
+      i++;
+      highestZIndex++;
+      markers.push(marker);
+      marker.set("myZIndex", marker.getZIndex());
+      google.maps.event.addListener(marker, "mouseover", function() {
+        this.setOptions({ zIndex: highestZIndex + 1 });
+      });
+      google.maps.event.addListener(marker, "mouseout", function() {
+        this.setOptions({ zIndex: this.get("myZIndex") });
       });
     });
   }
@@ -125,6 +139,7 @@ function newInitMap(userVals) {
 
   // }
 }
+
 // eslint-disable-next-line no-unused-vars
 async function worthAShot(userVals) {
   gatherData();
