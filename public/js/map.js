@@ -1,5 +1,6 @@
 //Globals
 let map, states, userLat, userLong;
+// eslint-disable-next-line prefer-const
 let markers = [];
 
 const getMemberZip = () => {
@@ -25,13 +26,7 @@ async function breweries(city, stateName) {
 
 async function userZipCode(zipCode) {
   try {
-    const clientKey = "js-372sPZt0JF7Jk43Lovlab0Ejmn9eTiZ7VycR1it9VrC5U1IIZCP5Kuvde8gwLZXx";
-    const url =
-      "https://www.zipcodeapi.com/rest/" +
-      clientKey +
-      "/info.json/" +
-      zipCode +
-      "/radians"; // need to pass in user input
+    const url = "http://api.zippopotam.us/us/" + zipCode;
     const res = await $.get(url);
     return res;
   } catch (err) {
@@ -45,19 +40,11 @@ $.getJSON("/data/states.json")
     return userZipCode(memberZipCode);
   })
   .then(res => {
-    console.log(res);
-    const stateCode = res.state;
-    const city = res.city;
-    userLong = res.lng;
-    userLat = res.lat;
-    let stateName;
-
-    for (const key in states) {
-      if (`${key}` === stateCode) {
-        stateName = `${states[key]}`;
-      }
-    }
-    return breweries(city, stateName);
+    const state = res.places[0].state;
+    const city = res.places[0]["place name"];
+    userLong = res.places.longitude;
+    userLat = res.places.latitude;
+    return breweries(city, state);
   })
   .then(breweryList => {
     console.log(breweryList);
