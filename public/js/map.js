@@ -1,6 +1,7 @@
 //Globals
 let map, states, userLat, userLong;
-const markers = [];
+// eslint-disable-next-line prefer-const
+let markers = [];
 
 const getMemberZip = () => {
   $.get("/api/user_data").then(user => {
