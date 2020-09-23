@@ -7,7 +7,7 @@ let userVals = [];
 
 async function getMemberZip() {
   $.get("/api/user_data").then(user => {
-    memberZipCode = user.zipCode;
+    memberZip = user.zipCode;
     return memberZip;
   });
 }
@@ -39,7 +39,6 @@ async function userZipCode(zipCode) {
     console.log("user long from api" + userLong);
     console.log("user lat from api" + userLat);
     console.log("user zip from api" + userZip);
-
     return res;
   } catch (err) {
     console.log(err);
@@ -58,9 +57,8 @@ async function gatherData() {
       .then(breweryList => {
         console.log("brewery list");
         console.log(breweryList);
-        //center map based on the zipCode we were given by the user
-        //use breweryList to add map markers to our map
         breweryList.forEach(brewery => {
+          $("#breweries").append("<li> " + brewery.name + "</li>");
           const markerObj = {
             lat: brewery.latitude,
             lng: brewery.longitude,
