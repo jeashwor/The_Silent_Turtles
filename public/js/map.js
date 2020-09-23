@@ -12,9 +12,15 @@ async function getMemberZip() {
     return memberZip;
   });
 }
-// let memberZipCode = getMemberZip();
 
-// let nonMemberZipCode = $("#nonMemberZipCode").val();
+$("#brewButton").click(event => {
+  event.preventDefault();
+  const nonMemberZipCode = $("#nonMemberZipCode").val();
+  console.log(nonMemberZipCode);
+  memberZip = nonMemberZipCode;
+  userZipCode(nonMemberZipCode).then(gatherData());
+  $("#nonMemberZipCode").val("");
+});
 
 async function breweries(city, stateName) {
   const url =
@@ -48,6 +54,7 @@ async function userZipCode(zipCode) {
 }
 
 async function gatherData() {
+  console.log("Are we hitting gatherData?");
   getMemberZip().then(
     userZipCode(memberZip)
       .then(res => {
