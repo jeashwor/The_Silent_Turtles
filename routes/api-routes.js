@@ -4,7 +4,7 @@ const passport = require("../config/passport");
 // const axios = require("axios");
 // const states = require("../states.json");
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
@@ -80,18 +80,41 @@ module.exports = function(app) {
     });
   });
 
-  app.put("/api/admin/:id", (req, res) => {
-    console.log(req.params.id);
-    db.User.update(
-      {
-        admin: true
-      },
-      {
-        where: {
-          id: req.params.id
+  async function adminUpdate(id, adminVal) {
+    console.log(adminVal);
+    if (adminVal === "true") {
+      console.log("running if false statement");
+      await db.User.update(
+        {
+          admin: false
+        },
+        {
+          where: {
+            id: id
+          }
         }
-      }
-    ).then(dbUsers => {
+      )
+    } else {
+      console.log("running if true statement");
+      await db.User.update(
+        {
+          admin: true
+        },
+        {
+          where: {
+            id: id
+          }
+        }
+      );
+    }
+  };
+
+  app.put("/api/admin/:id/:admin", (req, res) => {
+    console.log(req.params.id);
+    const id = req.params.id;
+    console.log(req.params.admin);
+    const adminVal = req.params.admin;
+    adminUpdate(id, adminVal).then(dbUsers => {
       res.json(dbUsers);
     });
   });
