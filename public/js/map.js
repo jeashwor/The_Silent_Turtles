@@ -9,8 +9,6 @@ async function getMemberZip() {
   $.get("/api/user_data").then(user => {
     memberZipCode = user.zipCode;
     return memberZip;
-    //alternatively, we use the zipcode API HERE (instead of in our route code)
-    //then setCenter on the map
   });
 }
 // let memberZipCode = getMemberZip();
@@ -65,7 +63,8 @@ async function gatherData() {
         breweryList.forEach(brewery => {
           const markerObj = {
             lat: brewery.latitude,
-            lng: brewery.longitude
+            lng: brewery.longitude,
+            name: brewery.name
           };
           markers.push(markerObj);
         });
@@ -80,8 +79,10 @@ async function gatherData() {
 
 function newInitMap(userVals) {
   console.log("running init Map");
+  console.log("marker list inside init map");
+  console.log(markers);
   const mapConfig = {};
-  mapConfig.zoom = 15;
+  mapConfig.zoom = 12;
   if (!userVals) {
     navigator.geolocation.getCurrentPosition(position => {
       console.log("geo location lat " + position.coords.latitude);
@@ -100,11 +101,23 @@ function newInitMap(userVals) {
       lng: userVals[0]
     };
     map = new google.maps.Map(document.getElementById("map"), mapConfig);
-    markers.forEach(marker => {
-      new google.maps.Marker({
+    markers.forEach(brewery => {
+      marker = new google.maps.Marker({
         position: {
-          lat: parseFloat(marker.lat),
-          lng: parseFloat(marker.lng)
+          lat: parseFloat(brewery.lat),
+          lng: parseFloat(brewery.lng)
+        },
+        label: {
+          text: brewery.name,
+          color: "black",
+          fontWeight: "bold"
+        },
+        icon: {
+          labelOrigin: new google.maps.Point(11, 60),
+          url: "./assets/beerIcon.png",
+          scaledSize: new google.maps.Size(35, 50),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(11, 40)
         },
         map: map
       });
@@ -116,12 +129,5 @@ function newInitMap(userVals) {
 }
 // eslint-disable-next-line no-unused-vars
 async function worthAShot(userVals) {
-  // let userVals = [];
-  // console.log("running worthAShot");
-  // console.log("user vals from worthAShot");
   gatherData();
-  // console.log(userVals);
-  // newInitMap(userVals);
 }
-
-// eslint-disable-next-line no-unused-vars
