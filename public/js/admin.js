@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  let 
   $.get("/api/user_data").then(data => {
     $(".member-name").text(data.name);
   });
@@ -25,6 +26,8 @@ $(document).ready(() => {
           user.updatedAt +
           "</td><td><button class='admin' data-id='" +
           user.id +
+          "' admin-id='" +
+          user.admin +
           "'>Admin</button></td><td><button class='delete' data-id='" +
           user.id +
           "'>Delete</button></td>"
@@ -45,10 +48,13 @@ $(document).ready(() => {
   function updateUserAdmin(event) {
     event.preventDefault();
     const id = $(this).data("id");
+    const adminVal = $(this).attr("admin-id");
+    const userVals = [id, adminVal];
     console.log(id);
     $.ajax({
       method: "PUT",
-      url: "/api/admin/" + id
+      url: "/api/admin/",
+      data: userVals
     }).then(window.location.reload());
   }
 
