@@ -82,14 +82,17 @@ module.exports = function(app) {
 
   app.put("/api/admin/:id/:admin", (req, res) => {
     console.log(req.params.id);
-    if (req.params.admin === false) {
+    const id = req.params.id;
+    console.log(req.params.admin);
+    const adminVal = req.params.id;
+    if (adminVal === false) {
       db.User.update(
         {
           admin: true
         },
         {
           where: {
-            id: req.params.id
+            id: id
           }
         }
       ).then(dbUsers => {
@@ -102,7 +105,7 @@ module.exports = function(app) {
         },
         {
           where: {
-            id: req.params.id
+            id: id
           }
         }
       ).then(dbUsers => {

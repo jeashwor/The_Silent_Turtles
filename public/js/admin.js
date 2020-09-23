@@ -1,5 +1,4 @@
 $(document).ready(() => {
-  let 
   $.get("/api/user_data").then(data => {
     $(".member-name").text(data.name);
   });
@@ -50,11 +49,11 @@ $(document).ready(() => {
     const id = $(this).data("id");
     const adminVal = $(this).attr("admin-id");
     const userVals = [id, adminVal];
-    console.log(id);
+    console.log(adminVal);
     $.ajax({
       method: "PUT",
-      url: "/api/admin/",
-      data: userVals
+      url: "/api/admin/" + id + "/" + adminVal
+      // data: userVals
     }).then(window.location.reload());
   }
 
