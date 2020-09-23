@@ -57,10 +57,8 @@ $.getJSON("/data/states.json")
     //use breweryList to add map markers to our map
     breweryList.forEach(brewery => {
       const markerObj = {
-        position: {
-          lat: brewery.latitude,
-          lng: brewery.longitude
-        }
+        lat: brewery.latitude,
+        lng: brewery.longitude
       };
       markers.push(markerObj);
     });
@@ -92,7 +90,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById("map"), mapConfig);
     markers.forEach(marker => {
       new google.maps.Marker({
-        position: { lat: marker.lat, lng: marker.lng },
+        position: { lat: parseFloat(marker.lat), lng: parseFloat(marker.lng) },
         map: map
       });
     });
