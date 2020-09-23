@@ -4,13 +4,12 @@ let map, userLong, userLat, userZip;
 let markers = [];
 // eslint-disable-next-line prefer-const
 let userVals = [];
+let highestZIndex = 0;
 
 async function getMemberZip() {
   $.get("/api/user_data").then(user => {
-    memberZipCode = user.zipCode;
+    memberZip = user.zipCode;
     return memberZip;
-    //alternatively, we use the zipcode API HERE (instead of in our route code)
-    //then setCenter on the map
   });
 }
 // let memberZipCode = getMemberZip();
@@ -41,7 +40,6 @@ async function userZipCode(zipCode) {
     console.log("user long from api" + userLong);
     console.log("user lat from api" + userLat);
     console.log("user zip from api" + userZip);
-
     return res;
   } catch (err) {
     console.log(err);
@@ -60,12 +58,12 @@ async function gatherData() {
       .then(breweryList => {
         console.log("brewery list");
         console.log(breweryList);
-        //center map based on the zipCode we were given by the user
-        //use breweryList to add map markers to our map
         breweryList.forEach(brewery => {
+          $("#breweries").append("<li> " + brewery.name + "</li>");
           const markerObj = {
             lat: brewery.latitude,
-            lng: brewery.longitude
+            lng: brewery.longitude,
+            name: brewery.name
           };
           markers.push(markerObj);
         });
@@ -80,8 +78,10 @@ async function gatherData() {
 
 function newInitMap(userVals) {
   console.log("running init Map");
+  console.log("marker list inside init map");
+  console.log(markers);
   const mapConfig = {};
-  mapConfig.zoom = 15;
+  mapConfig.zoom = 12;
   if (!userVals) {
     navigator.geolocation.getCurrentPosition(position => {
       console.log("geo location lat " + position.coords.latitude);
@@ -100,13 +100,38 @@ function newInitMap(userVals) {
       lng: userVals[0]
     };
     map = new google.maps.Map(document.getElementById("map"), mapConfig);
-    markers.forEach(marker => {
-      new google.maps.Marker({
+    let i = 0;
+    markers.forEach(brewery => {
+      marker = new google.maps.Marker({
         position: {
-          lat: parseFloat(marker.lat),
-          lng: parseFloat(marker.lng)
+          lat: parseFloat(brewery.lat),
+          lng: parseFloat(brewery.lng)
         },
+        label: {
+          text: brewery.name,
+          color: "black",
+          fontWeight: "bold"
+        },
+        icon: {
+          labelOrigin: new google.maps.Point(11, 60),
+          url: "./assets/beerIcon.png",
+          scaledSize: new google.maps.Size(35, 50),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(11, 40)
+        },
+        optimized: false,
+        zIndex: i,
         map: map
+      });
+      i++;
+      highestZIndex++;
+      markers.push(marker);
+      marker.set("myZIndex", marker.getZIndex());
+      google.maps.event.addListener(marker, "mouseover", function() {
+        this.setOptions({ zIndex: highestZIndex + 1 });
+      });
+      google.maps.event.addListener(marker, "mouseout", function() {
+        this.setOptions({ zIndex: this.get("myZIndex") });
       });
     });
   }
@@ -114,14 +139,8 @@ function newInitMap(userVals) {
 
   // }
 }
-// eslint-disable-next-line no-unused-vars
-async function worthAShot(userVals) {
-  // let userVals = [];
-  // console.log("running worthAShot");
-  // console.log("user vals from worthAShot");
-  gatherData();
-  // console.log(userVals);
-  // newInitMap(userVals);
-}
 
 // eslint-disable-next-line no-unused-vars
+async function worthAShot(userVals) {
+  gatherData();
+}
