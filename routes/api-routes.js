@@ -80,19 +80,34 @@ module.exports = function(app) {
     });
   });
 
-  app.put("/api/admin/:id", (req, res) => {
+  app.put("/api/admin/:id/:admin", (req, res) => {
     console.log(req.params.id);
-    db.User.update(
-      {
-        admin: true
-      },
-      {
-        where: {
-          id: req.params.id
+    if (req.params.admin === false) {
+      db.User.update(
+        {
+          admin: true
+        },
+        {
+          where: {
+            id: req.params.id
+          }
         }
-      }
-    ).then(dbUsers => {
-      res.json(dbUsers);
-    });
+      ).then(dbUsers => {
+        res.json(dbUsers);
+      });
+    } else {
+      db.User.update(
+        {
+          admin: false
+        },
+        {
+          where: {
+            id: req.params.id
+          }
+        }
+      ).then(dbUsers => {
+        res.json(dbUsers);
+      });
+    }
   });
 };
