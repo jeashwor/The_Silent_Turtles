@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+const adminUpdate = require("../config/middleware/adminUpdate");
 // const axios = require("axios");
 // const states = require("../states.json");
 
@@ -79,35 +80,6 @@ module.exports = function (app) {
       res.json(dbUsers);
     });
   });
-
-  async function adminUpdate(id, adminVal) {
-    console.log(adminVal);
-    if (adminVal === "true") {
-      console.log("running if false statement");
-      await db.User.update(
-        {
-          admin: false
-        },
-        {
-          where: {
-            id: id
-          }
-        }
-      )
-    } else {
-      console.log("running if true statement");
-      await db.User.update(
-        {
-          admin: true
-        },
-        {
-          where: {
-            id: id
-          }
-        }
-      );
-    }
-  };
 
   app.put("/api/admin/:id/:admin", (req, res) => {
     console.log(req.params.id);
