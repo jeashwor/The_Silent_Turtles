@@ -81,7 +81,7 @@ async function gatherData() {
         console.log(markers);
         newInitMap(userVals);
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err), alert("Invalid Zip Code"))
   );
   // console.log("Tracking userZip Value" + userZip);
 }
