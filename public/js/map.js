@@ -60,12 +60,13 @@ async function gatherData() {
       })
       .then(breweryList => {
         breweryList.forEach(brewery => {
-          $("#breweries").append("<li> " + brewery.name + "</li>");
           const text = "Been there?";
           $("#breweries").append(
-            "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target='#beerList'>" +
+            "<li><span> " +
+              brewery.name +
+              "</span><button type='button' class='btn btn-info btn-lg beenThere' data-toggle='modal' data-target='#beerList'>" +
               text +
-              "</button> <br>"
+              "</button></li>"
           );
           const markerObj = {
             lat: brewery.latitude,
@@ -114,10 +115,12 @@ function newInitMap(userVals) {
           url: "./assets/beerIcon.png",
           scaledSize: new google.maps.Size(35, 50),
           origin: new google.maps.Point(0, 0),
+          labelClass: "label",
           anchor: new google.maps.Point(11, 40)
         },
         optimized: false,
         zIndex: i,
+        labelInBackground: true,
         url: brewery.url,
         map: map
       });
