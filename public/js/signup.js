@@ -18,7 +18,12 @@ $(document).ready(() => {
       favBreweryType: favBreweryTypeInput.val().trim()
     };
 
-    if (!userData.userName || !userData.email || !userData.password || !userData.zipCode) {
+    if (
+      !userData.userName ||
+      !userData.email ||
+      !userData.password ||
+      !userData.zipCode
+    ) {
       return;
     }
     signUpUser(userData);

@@ -43,11 +43,6 @@ async function userZipCode(zipCode) {
     userLat = parseFloat(res.places[0].latitude);
     userZip = parseInt(res["post code"]);
     userVals.push(userLong, userLat, userZip);
-    console.log("user vals from api");
-    console.log(userVals);
-    console.log("user long from api" + userLong);
-    console.log("user lat from api" + userLat);
-    console.log("user zip from api" + userZip);
     return res;
   } catch (err) {
     console.log(err);
@@ -56,7 +51,6 @@ async function userZipCode(zipCode) {
 }
 
 async function gatherData() {
-  console.log("Are we hitting gatherData?");
   getMemberZip().then(
     userZipCode(memberZip)
       .then(res => {
@@ -65,10 +59,14 @@ async function gatherData() {
         return breweries(city, state);
       })
       .then(breweryList => {
-        console.log("brewery list");
-        console.log(breweryList);
         breweryList.forEach(brewery => {
           $("#breweries").append("<li> " + brewery.name + "</li>");
+          const text = "Been there?";
+          $("#breweries").append(
+            "<button type='button' class='btn btn-info btn-lg' data-toggle='modal' data-target='#beerList'>" +
+              text +
+              "</button> <br>"
+          );
           const markerObj = {
             lat: brewery.latitude,
             lng: brewery.longitude,
@@ -77,34 +75,23 @@ async function gatherData() {
           };
           markers.push(markerObj);
         });
-        console.log("marker list");
-        console.log(markers);
         newInitMap(userVals);
       })
       .catch(err => console.log(err))
   );
-  // console.log("Tracking userZip Value" + userZip);
 }
 
 function newInitMap(userVals) {
-  console.log("running init Map");
-  console.log("marker list inside init map");
-  console.log(markers);
   const mapConfig = {};
   mapConfig.zoom = 11;
   if (!userVals) {
     navigator.geolocation.getCurrentPosition(position => {
-      console.log("geo location lat " + position.coords.latitude);
-      console.log("geo location long " + position.coords.longitude);
       mapConfig.center = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
     });
   } else if (userVals[2]) {
-    console.log("user lat lng");
-    console.log(userVals[1]);
-    console.log(userVals[0]);
     mapConfig.center = {
       lat: userVals[1],
       lng: userVals[0]
@@ -112,7 +99,6 @@ function newInitMap(userVals) {
     map = new google.maps.Map(document.getElementById("map"), mapConfig);
     let i = 0;
     markers.forEach(brewery => {
-      console.log(brewery.url);
       marker = new google.maps.Marker({
         position: {
           lat: parseFloat(brewery.lat),
