@@ -42,12 +42,21 @@ td {
   position: fixed;
 }
 
+.label {
+  background-color: rgb(255,188, 0);
+}
 .navbar {
   background-color: rgb(255,188, 0);
 }
 
 .navbar-brand {
   color: black;
+}
+
+.beenThere {
+  font-size: 10px !important;
+  padding: 5px !important;
+  margin: 10px;
 }
 
 form.signup,

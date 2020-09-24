@@ -46,7 +46,6 @@ $(document).ready(() => {
     event.preventDefault();
     const id = $(this).data("id");
     const adminVal = $(this).attr("admin-id");
-    const userVals = [id, adminVal];
     $.ajax({
       method: "PUT",
       url: "/api/admin/" + id + "/" + adminVal
