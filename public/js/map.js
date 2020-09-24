@@ -15,8 +15,10 @@ async function getMemberZip() {
 
 $("#brewButton").click(event => {
   event.preventDefault();
+  $("#breweries").empty(); // clears out the li elements
+  markers = []; // deletes the old markers when user types in a new ZipCode
+  userVals = []; // this allows the map to relocate to the newly entered ZipCode
   const nonMemberZipCode = $("#nonMemberZipCode").val();
-  console.log(nonMemberZipCode);
   memberZip = nonMemberZipCode;
   userZipCode(nonMemberZipCode).then(gatherData());
   $("#nonMemberZipCode").val("");
