@@ -50,6 +50,12 @@ async function userZipCode(zipCode) {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
+const assignBrewery = id => {
+  console.log(id);
+  $(".breweryName").text(id);
+};
+
 async function gatherData() {
   getMemberZip().then(
     userZipCode(memberZip)
@@ -64,7 +70,9 @@ async function gatherData() {
           $("#breweries").append(
             "<li><span> " +
               brewery.name +
-              "</span><button type='button' class='btn btn-info btn-lg beenThere' data-toggle='modal' data-target='#beerList'>" +
+              "</span><button onclick='assignBrewery(this.id)' type='button' class='btn btn-info btn-lg beenThere' data-toggle='modal' data-target='#beerList' id='" +
+              brewery.name +
+              "'>" +
               text +
               "</button></li>"
           );
@@ -139,9 +147,6 @@ function newInitMap(userVals) {
       });
     });
   }
-  // else if (nonMemberZipCode) {
-
-  // }
 }
 
 // eslint-disable-next-line no-unused-vars
