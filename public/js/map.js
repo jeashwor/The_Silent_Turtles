@@ -78,7 +78,7 @@ async function gatherData() {
         });
         newInitMap(userVals);
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err), alert("Invalid Zip Code"))
   );
 }
 
