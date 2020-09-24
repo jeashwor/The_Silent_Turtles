@@ -4,7 +4,6 @@ $(document).ready(() => {
   });
 
   $.get("/api/admin").then(data => {
-    console.log(data);
     data.forEach(user => {
       $("#userList").append(
         "<tr><td>" +
@@ -37,7 +36,6 @@ $(document).ready(() => {
   function deleteUser(event) {
     event.preventDefault();
     const id = $(this).data("id");
-    console.log(id);
     $.ajax({
       method: "DELETE",
       url: "/api/admin/" + id
@@ -49,7 +47,6 @@ $(document).ready(() => {
     const id = $(this).data("id");
     const adminVal = $(this).attr("admin-id");
     const userVals = [id, adminVal];
-    console.log(adminVal);
     $.ajax({
       method: "PUT",
       url: "/api/admin/" + id + "/" + adminVal
