@@ -63,7 +63,8 @@ async function gatherData() {
           const markerObj = {
             lat: brewery.latitude,
             lng: brewery.longitude,
-            name: brewery.name
+            name: brewery.name,
+            url: brewery.website_url
           };
           markers.push(markerObj);
         });
@@ -81,7 +82,7 @@ function newInitMap(userVals) {
   console.log("marker list inside init map");
   console.log(markers);
   const mapConfig = {};
-  mapConfig.zoom = 12;
+  mapConfig.zoom = 11;
   if (!userVals) {
     navigator.geolocation.getCurrentPosition(position => {
       console.log("geo location lat " + position.coords.latitude);
@@ -102,6 +103,7 @@ function newInitMap(userVals) {
     map = new google.maps.Map(document.getElementById("map"), mapConfig);
     let i = 0;
     markers.forEach(brewery => {
+      console.log(brewery.url);
       marker = new google.maps.Marker({
         position: {
           lat: parseFloat(brewery.lat),
@@ -121,6 +123,7 @@ function newInitMap(userVals) {
         },
         optimized: false,
         zIndex: i,
+        url: brewery.url,
         map: map
       });
       i++;
@@ -132,6 +135,9 @@ function newInitMap(userVals) {
       });
       google.maps.event.addListener(marker, "mouseout", function() {
         this.setOptions({ zIndex: this.get("myZIndex") });
+      });
+      google.maps.event.addListener(marker, "click", function() {
+        window.open(this.url);
       });
     });
   }
