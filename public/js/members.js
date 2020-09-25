@@ -39,3 +39,18 @@ $(document).ready(() => {
     getBeerData();
   });
 });
+
+const getBeers = () => {
+  $.get("/api/beerlist").then(data => {
+    if ($("#favoriteBeers")[0].hidden === true) {
+      $("#favoriteBeers")[0].hidden = false;
+      data.forEach(beers => {
+        $(".favoriteBeers").append("<p>" + beers + "</p>");
+      });
+    } else {
+      data.forEach(beers => {
+        $(".favoriteBeers").append("<p>" + beers + "</p>");
+      });
+    }
+  });
+};
