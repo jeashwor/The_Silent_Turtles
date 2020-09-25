@@ -40,7 +40,7 @@ async function breweries(city, stateName) {
 
 async function userZipCode(zipCode) {
   try {
-    const url = "http://api.zippopotam.us/us/" + zipCode;
+    const url = "https://api.zippopotam.us/us/" + zipCode;
     const res = await $.get(url);
     userLong = parseFloat(res.places[0].longitude);
     userLat = parseFloat(res.places[0].latitude);
