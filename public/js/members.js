@@ -11,15 +11,18 @@ $(document).ready(() => {
 
   const beerInput = $("#beerInput");
   const breweryName = $(".breweryName");
+  const modalVal = $("#beerList");
+  const favBeerList = $("#favoriteBeers");
+  const favBeer = $(".favoriteBeers");
 
-  const getBeerData = () => {
+  const getBeerData = async () => {
     const beerData = {
       beerName: beerInput[0].value,
       breweryName: breweryName[0].innerHTML,
       user: userID
     };
     console.log(beerData.user);
-    $.post("/api/beer", {
+    await $.post("/api/beer", {
       beerName: beerData.beerName,
       brewery: beerData.breweryName,
       userId: beerData.user
@@ -34,25 +37,39 @@ $(document).ready(() => {
       });
   };
 
-  const getBeers = () => {
-    $.get("/api/beers/" + userID, { id: userID }).then(data => {
-      console.log(data);
-      if ($("#favoriteBeers")[0].hidden === true) {
-        $("#favoriteBeers")[0].hidden = false;
+  const getBeers = async () => {
+    $.get("/api/beers/" + userID + "/" + breweryName[0].innerHTML, {
+      id: userID,
+      brewery: breweryName[0].innerHTML
+    }).then(data => {
+      favBeer.text("");
+      if (favBeerList[0].hidden === true) {
+        favBeerList[0].hidden = false;
         data.forEach(beers => {
-          $(".favoriteBeers").append("<p>" + beers.beer_name + "</p>");
+          favBeer.append("<p>" + beers.beer_name + "</p>");
         });
       } else {
         data.forEach(beers => {
-          $(".favoriteBeers").append("<p>" + beers.beer_name + "</p>");
+          favBeer.append("<p>" + beers.beer_name + "</p>");
         });
       }
     });
   };
 
-  $("#submitBtn").on("click", event => {
+  const assignBrewery = async id => {
+    breweryName.text(id);
+  };
+
+  $(document).on("click", "#submitBtn", event => {
     event.preventDefault();
-    getBeerData();
-    getBeers();
+    getBeerData().then(modalVal.modal("toggle"));
+  });
+
+  $(document).on("click", ".beenThere", function(event) {
+    event.preventDefault();
+    console.log("clicked " + this.id + " brewery.");
+    assignBrewery(this.id)
+      .then(getBeers())
+      .then(modalVal.modal());
   });
 });

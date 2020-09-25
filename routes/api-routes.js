@@ -56,10 +56,11 @@ module.exports = function(app) {
   });
 
   // Route for getting beers based on user id
-  app.get("/api/beers/:id", (req, res) => {
+  app.get("/api/beers/:id/:brewery", (req, res) => {
     db.Beer.findAll({
       where: {
-        UserId: req.params.id
+        UserId: req.params.id,
+        brewery: req.params.brewery
       }
     }).then(beers => {
       res.json(beers);

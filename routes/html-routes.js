@@ -34,20 +34,10 @@ module.exports = function(app) {
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
   app.get("/members", isAuthenticated, (req, res) => {
-    console.log(req.user);
     const data = fs.readFileSync(
       path.join(__dirname, "../public/members.html"),
       "utf8"
     );
-    //this route can use req.user.zipCode to make an axios call to our zipcode api and get lat/lng
-    //.then(data => {
-    //res.send(data.replace("{{memberLat}}", latFromAPI).replace("memberLng", lngFromAPI));
-    //})
-    // .catch(err => {
-    //don't replace the data. If we don't replace, we need to check on the front end
-    //to see if the placeholders still exist and use navigator.geolocation to center the map instead
-    // })
-
     res.send(data.replace("{{memberZip}}", req.user.zipCode));
   });
 };
