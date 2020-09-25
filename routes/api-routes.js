@@ -42,6 +42,7 @@ module.exports = function(app) {
     userIdVal = parseInt(req.body.userId);
     console.log(userIdVal);
     db.Beer.create({
+      // eslint-disable-next-line camelcase
       beer_name: req.body.beerName,
       brewery: req.body.brewery,
       UserId: userIdVal
