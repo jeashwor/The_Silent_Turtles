@@ -42,7 +42,6 @@ $(document).ready(() => {
       id: userID,
       brewery: breweryName[0].innerHTML
     }).then(data => {
-      console.log(data);
       favBeer.text("");
       if (data.length === 0) {
         favBeerList[0].hidden = true;
@@ -65,11 +64,11 @@ $(document).ready(() => {
   $(document).on("click", "#submitBtn", event => {
     event.preventDefault();
     getBeerData().then(modalVal.modal("toggle"));
+    beerInput.val("");
   });
 
   $(document).on("click", ".beenThere", function(event) {
     event.preventDefault();
-    console.log("clicked " + this.id + " brewery.");
     assignBrewery(this.id)
       .then(getBeers())
       .then(modalVal.modal());
