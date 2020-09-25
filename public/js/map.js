@@ -1,5 +1,5 @@
 //Globals
-let map, userLong, userLat, userZip;
+let map, userLong, userLat, userZip, nonMemberZipCode;
 // eslint-disable-next-line prefer-const
 let markers = [];
 // eslint-disable-next-line prefer-const
@@ -7,10 +7,14 @@ let userVals = [];
 let highestZIndex = 0;
 
 async function getMemberZip() {
-  $.get("/api/user_data").then(user => {
-    memberZip = user.zipCode;
-    return memberZip;
-  });
+  if (!nonMemberZipCode) {
+    $.get("/api/user_data").then(user => {
+      memberZip = user.zipCode;
+      return memberZip;
+    });
+  } else {
+    memberZip = nonMemberZipCode;
+  }
 }
 
 $("#brewButton").click(event => {
@@ -18,8 +22,8 @@ $("#brewButton").click(event => {
   $("#breweries").empty(); // clears out the li elements
   markers = []; // deletes the old markers when user types in a new ZipCode
   userVals = []; // this allows the map to relocate to the newly entered ZipCode
-  const nonMemberZipCode = $("#nonMemberZipCode").val();
-  memberZip = nonMemberZipCode;
+  nonMemberZipCode = $("#nonMemberZipCode").val();
+  // memberZip = nonMemberZipCode;
   userZipCode(nonMemberZipCode).then(gatherData());
   $("#nonMemberZipCode").val("");
 });
@@ -50,11 +54,6 @@ async function userZipCode(zipCode) {
   }
 }
 
-// eslint-disable-next-line no-unused-vars
-const assignBrewery = id => {
-  $(".breweryName").text(id);
-};
-
 async function gatherData() {
   getMemberZip().then(
     userZipCode(memberZip)
@@ -69,7 +68,7 @@ async function gatherData() {
           $("#breweries").append(
             "<li><span> " +
               brewery.name +
-              "</span><button onclick='assignBrewery(this.id)' type='button' class='btn btn-info btn-lg beenThere' data-toggle='modal' data-target='#beerList' id='" +
+              "</span><button type='button' class='btn btn-info btn-lg beenThere' id='" +
               brewery.name +
               "'>" +
               text +
