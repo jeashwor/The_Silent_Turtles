@@ -3,17 +3,6 @@ const express = require("express");
 const session = require("express-session");
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
-const flash = require("connect-flash");
-
-const dotenv = require("dotenv");
-
-const result = dotenv.config();
-if (result.error) {
-  throw result.error;
-}
-
-console.log(result.parsed);
-console.log(process.env);
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
@@ -30,8 +19,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(flash());
 
 // Requiring our routes
 require("./routes/html-routes.js")(app);

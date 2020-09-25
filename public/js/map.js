@@ -78,7 +78,12 @@ async function gatherData() {
         });
         newInitMap(userVals);
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        if (err) {
+          alert("Please enter a valid United States Zip Code");
+          console.log(err);
+        }
+      })
   );
 }
 
@@ -139,9 +144,6 @@ function newInitMap(userVals) {
       });
     });
   }
-  // else if (nonMemberZipCode) {
-
-  // }
 }
 
 // eslint-disable-next-line no-unused-vars
