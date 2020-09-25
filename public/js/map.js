@@ -52,18 +52,7 @@ async function userZipCode(zipCode) {
 
 // eslint-disable-next-line no-unused-vars
 const assignBrewery = id => {
-  console.log(id);
   $(".breweryName").text(id);
-};
-
-const getBeers = () => {
-  $.get("/api/beerlist").then(data => {
-    if ($("#favoriteBeers").attr("display") === "none") {
-      console.log("Here we go", data);
-    } else {
-      console.log("Nothing to see here", data);
-    }
-  });
 };
 
 async function gatherData() {
