@@ -5,17 +5,6 @@ let markers = [];
 // eslint-disable-next-line prefer-const
 let userVals = [];
 
-// async function getMemberZip() {
-//   if (!nonMemberZipCode) {
-//     $.get("/api/user_data").then(user => {
-//       memberZip = user.zipCode;
-//       return memberZip;
-//     });
-//   } else {
-//     memberZip = nonMemberZipCode;
-//   }
-// }
-
 $("#brewButton").click(event => {
   event.preventDefault();
   $("#breweries").empty(); // clears out the li elements
@@ -66,7 +55,7 @@ async function breweries(city, stateName) {
 
 async function userZipCode(zipCode) {
   try {
-    const url = "http://api.zippopotam.us/us/" + zipCode;
+    const url = "https://api.zippopotam.us/us/" + zipCode;
     const res = await $.get(url);
     userLong = parseFloat(res.places[0].longitude);
     userLat = parseFloat(res.places[0].latitude);
