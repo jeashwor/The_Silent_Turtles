@@ -4,7 +4,6 @@ let map, userLong, userLat, userZip, nonMemberZipCode;
 let markers = [];
 // eslint-disable-next-line prefer-const
 let userVals = [];
-let highestZIndex = 0;
 
 async function getMemberZip() {
   if (!nonMemberZipCode) {
@@ -109,42 +108,26 @@ function newInitMap(userVals) {
       lng: userVals[0]
     };
     map = new google.maps.Map(document.getElementById("map"), mapConfig);
-    let i = 0;
     markers.forEach(brewery => {
       marker = new google.maps.Marker({
         position: {
           lat: parseFloat(brewery.lat),
           lng: parseFloat(brewery.lng)
         },
-        label: {
-          text: brewery.name,
-          color: "black",
-          fontWeight: "bold"
-        },
+        title: brewery.name,
         icon: {
-          labelOrigin: new google.maps.Point(11, 60),
           url: "./assets/beerIcon.png",
-          scaledSize: new google.maps.Size(35, 50),
+          scaledSize: new google.maps.Size(30, 40),
           origin: new google.maps.Point(0, 0),
-          labelClass: "label",
-          anchor: new google.maps.Point(11, 40)
+          anchor: new google.maps.Point(30, 40)
         },
         optimized: false,
-        zIndex: i,
         labelInBackground: true,
         url: brewery.url,
-        map: map
+        map: map,
+        animation: google.maps.Animation.DROP
       });
-      i++;
-      highestZIndex++;
       markers.push(marker);
-      marker.set("myZIndex", marker.getZIndex());
-      google.maps.event.addListener(marker, "mouseover", function() {
-        this.setOptions({ zIndex: highestZIndex + 1 });
-      });
-      google.maps.event.addListener(marker, "mouseout", function() {
-        this.setOptions({ zIndex: this.get("myZIndex") });
-      });
       google.maps.event.addListener(marker, "click", function() {
         window.open(this.url);
       });
