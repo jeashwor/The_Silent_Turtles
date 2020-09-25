@@ -54,9 +54,6 @@ async function userZipCode(zipCode) {
   }
 }
 
-// eslint-disable-next-line no-unused-vars
-
-
 async function gatherData() {
   getMemberZip().then(
     userZipCode(memberZip)
