@@ -21,6 +21,7 @@ $("#submitBtn").on("click", event => {
   })
     .then(() => {
       console.log("Is this working?");
+      getBeers();
     })
     .catch(err => {
       if (err) {

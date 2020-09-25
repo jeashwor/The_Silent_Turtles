@@ -56,6 +56,16 @@ const assignBrewery = id => {
   $(".breweryName").text(id);
 };
 
+const getBeers = () => {
+  $.get("/api/beerlist").then(data => {
+    if ($("#favoriteBeers").attr("display") === "none") {
+      console.log("Here we go", data);
+    } else {
+      console.log("Nothing to see here", data);
+    }
+  });
+};
+
 async function gatherData() {
   getMemberZip().then(
     userZipCode(memberZip)
