@@ -58,7 +58,9 @@ $(document).ready(() => {
       } else {
         userSelected.text(user);
         data.forEach(beers => {
-          favBeer.append("<li>" + beers.beer_name + " from " + beers.brewery + "</li>");
+          favBeer.append(
+            "<li>" + beers.beer_name + " from " + beers.brewery + "</li>"
+          );
           console.log(beers.beer_name + " added to list");
         });
       }
