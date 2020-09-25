@@ -16,9 +16,8 @@ module.exports = function(app) {
       id: req.user.id
     });
   });
-  // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
-  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
-  // otherwise send back an error
+
+  // Route for signing up a user.
   app.post("/api/signup", (req, res) => {
     console.log(req.body);
     db.User.create({
@@ -37,6 +36,7 @@ module.exports = function(app) {
       });
   });
 
+  // Route for creating beer in DB from user input.
   app.post("/api/beer", (req, res) => {
     console.log(req.body);
     userIdVal = parseInt(req.body.userId);
@@ -55,6 +55,17 @@ module.exports = function(app) {
       });
   });
 
+  // Route for getting beers based on user id
+  app.get("/api/beers/:id", (req, res) => {
+    db.Beer.findAll({
+      where: {
+        UserId: req.params.id
+      }
+    }).then(beers => {
+      res.json(beers);
+    });
+  });
+
   // Route for getting all users for admin display
   app.get("/api/admin", (req, res) => {
     db.User.findAll({}).then(dbUsers => {
@@ -71,11 +82,8 @@ module.exports = function(app) {
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
-      // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
         name: req.user.name,
@@ -88,6 +96,7 @@ module.exports = function(app) {
     }
   });
 
+  // Route for deleting user on admin page
   app.delete("/api/admin/:id", (req, res) => {
     console.log(req.params.id);
     db.User.destroy({
@@ -99,6 +108,7 @@ module.exports = function(app) {
     });
   });
 
+  // Route for changing admin value of user.
   app.put("/api/admin/:id/:admin", (req, res) => {
     console.log(req.params.id);
     const id = req.params.id;

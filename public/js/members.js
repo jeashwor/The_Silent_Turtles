@@ -34,23 +34,25 @@ $(document).ready(() => {
       });
   };
 
+  const getBeers = () => {
+    $.get("/api/beers/" + userID, { id: userID }).then(data => {
+      console.log(data);
+      if ($("#favoriteBeers")[0].hidden === true) {
+        $("#favoriteBeers")[0].hidden = false;
+        data.forEach(beers => {
+          $(".favoriteBeers").append("<p>" + beers.beer_name + "</p>");
+        });
+      } else {
+        data.forEach(beers => {
+          $(".favoriteBeers").append("<p>" + beers.beer_name + "</p>");
+        });
+      }
+    });
+  };
+
   $("#submitBtn").on("click", event => {
     event.preventDefault();
     getBeerData();
+    getBeers();
   });
 });
-
-const getBeers = () => {
-  $.get("/api/beerlist").then(data => {
-    if ($("#favoriteBeers")[0].hidden === true) {
-      $("#favoriteBeers")[0].hidden = false;
-      data.forEach(beers => {
-        $(".favoriteBeers").append("<p>" + beers + "</p>");
-      });
-    } else {
-      data.forEach(beers => {
-        $(".favoriteBeers").append("<p>" + beers + "</p>");
-      });
-    }
-  });
-};
