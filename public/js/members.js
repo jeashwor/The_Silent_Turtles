@@ -45,9 +45,6 @@ $(document).ready(() => {
       favBeer.text("");
       if (data.length === 0) {
         favBeerList[0].hidden = true;
-        data.forEach(beers => {
-          favBeer.append("<li>" + beers.beer_name + "</li>");
-        });
       } else {
         favBeerList[0].hidden = false;
         data.forEach(beers => {

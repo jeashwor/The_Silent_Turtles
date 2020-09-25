@@ -60,6 +60,10 @@ td {
   margin: 10px;
 }
 
+.userBeers {
+  margin-top: 20px;
+}
+
 form.signup,
 form.login {
   margin: 20px 0px 20px 0px;
