@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Brewery.associate = function(models) {
-    Brewery.hasMany(models.Beers, { as: "beers" });
+    Brewery.hasMany(models.Beer, { as: "beer" });
   };
   return Brewery;
 };

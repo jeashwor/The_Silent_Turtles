@@ -37,6 +37,24 @@ module.exports = function(app) {
       });
   });
 
+  app.post("/api/beer", (req, res) => {
+    console.log(req.body);
+    userIdVal = parseInt(req.body.userId);
+    console.log(userIdVal);
+    db.Beer.create({
+      beer_name: req.body.beerName,
+      brewery: req.body.brewery,
+      UserId: userIdVal
+    })
+      .then(() => {
+        console.log("beer added to DB");
+      })
+      .catch(err => {
+        console.log(JSON.stringify(err));
+        res.status(401).json(err);
+      });
+  });
+
   // Route for getting all users for admin display
   app.get("/api/admin", (req, res) => {
     db.User.findAll({}).then(dbUsers => {
