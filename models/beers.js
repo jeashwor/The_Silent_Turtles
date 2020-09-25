@@ -1,8 +1,11 @@
-/* eslint-disable camelcase */
 // Creating our Beers model
 module.exports = (sequelize, DataTypes) => {
   const Beers = sequelize.define("Beers", {
-    beer_name: {
+    beerName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    brewery: {
       type: DataTypes.STRING,
       allowNull: false
     }

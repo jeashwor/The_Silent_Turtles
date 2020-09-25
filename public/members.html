@@ -47,14 +47,14 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h4>What was your favorite beer at the brewery?</h4>
+                  <h4>What was your favorite beer at <span class="breweryName"></span></h4>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <!-- Can we add brewery name here instead of saying generic brewery? -->
                 </div>
                 <div class="modal-body">
-                  <p>Add your favorite beer at this brewery to your profile!</p>
-                  <!-- Can we add brewery name here instead of saying generic brewery? -->
-                  <input type="text" id="beerInput" placeholder="420 IPA"></input>
+                  <p style="display: none;">Your favorite beers at <span class="breweryName"></span> so far include:
+                    <span class="favoriteBeers"></span></p>
+                  <p>Add your favorite beer at <span class="breweryName"></span> to your profile!</p>
+                  <input type="text" id="beerInput" placeholder="Natural Light"></input>
                   <button class="btn btn-primary" type="submit" id="submitBtn">Add This Brew</button>
                 </div>
               </div>
@@ -81,9 +81,13 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-      <script defer
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc4zOKsWDDNrNX567-_LsnKiOLabv9A3A&callback=worthAShot">
     </script>
   <script type="text/javascript" src="js/members.js"></script>
