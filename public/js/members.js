@@ -21,6 +21,7 @@ $(document).ready(() => {
       breweryName: breweryName[0].innerHTML,
       user: userID
     };
+    console.log(beerData.user);
     await $.post("/api/beer", {
       beerName: beerData.beerName,
       brewery: beerData.breweryName,
@@ -68,6 +69,7 @@ $(document).ready(() => {
 
   $(document).on("click", ".beenThere", function(event) {
     event.preventDefault();
+    console.log("clicked " + this.id + " brewery.");
     assignBrewery(this.id)
       .then(getBeers())
       .then(modalVal.modal());
