@@ -4,16 +4,6 @@ const session = require("express-session");
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
 
-const dotenv = require("dotenv");
-
-const result = dotenv.config();
-if (result.error) {
-  throw result.error;
-}
-
-console.log(result.parsed);
-console.log(process.env);
-
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
 const db = require("./models");

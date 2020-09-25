@@ -1,11 +1,9 @@
 $(document).ready(() => {
-  let 
   $.get("/api/user_data").then(data => {
     $(".member-name").text(data.name);
   });
 
   $.get("/api/admin").then(data => {
-    console.log(data);
     data.forEach(user => {
       $("#userList").append(
         "<tr><td>" +
@@ -38,7 +36,6 @@ $(document).ready(() => {
   function deleteUser(event) {
     event.preventDefault();
     const id = $(this).data("id");
-    console.log(id);
     $.ajax({
       method: "DELETE",
       url: "/api/admin/" + id
@@ -49,12 +46,9 @@ $(document).ready(() => {
     event.preventDefault();
     const id = $(this).data("id");
     const adminVal = $(this).attr("admin-id");
-    const userVals = [id, adminVal];
-    console.log(id);
     $.ajax({
       method: "PUT",
-      url: "/api/admin/",
-      data: userVals
+      url: "/api/admin/" + id + "/" + adminVal
     }).then(window.location.reload());
   }
 

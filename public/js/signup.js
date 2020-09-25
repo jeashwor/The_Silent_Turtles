@@ -18,7 +18,12 @@ $(document).ready(() => {
       favBreweryType: favBreweryTypeInput.val().trim()
     };
 
-    if (!userData.userName || !userData.email || !userData.password || !userData.zipCode) {
+    if (
+      !userData.userName ||
+      !userData.email ||
+      !userData.password ||
+      !userData.zipCode
+    ) {
       return;
     }
     signUpUser(userData);
@@ -45,8 +50,8 @@ $(document).ready(() => {
       .catch(handleLoginErr);
   }
 
-  function handleLoginErr(err) {
-    $("#alert .msg").text(err.responseJSON);
+  function handleLoginErr() {
+    $("#alert .msg").text("Please enter a valid United States Zip Code");
     $("#alert").fadeIn(500);
   }
 });

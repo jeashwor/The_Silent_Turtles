@@ -34,6 +34,7 @@ $(document).ready(() => {
       })
       .catch(err => {
         console.log(err);
+        alert("Either User Email or User Password entered was Incorrect");
       });
   }
 });

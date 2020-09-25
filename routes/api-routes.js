@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+const adminUpdate = require("../config/middleware/adminUpdate");
 // const axios = require("axios");
 // const states = require("../states.json");
 
@@ -15,9 +16,8 @@ module.exports = function(app) {
       id: req.user.id
     });
   });
-  // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
-  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
-  // otherwise send back an error
+
+  // Route for signing up a user.
   app.post("/api/signup", (req, res) => {
     console.log(req.body);
     db.User.create({
@@ -36,6 +36,38 @@ module.exports = function(app) {
       });
   });
 
+  // Route for creating beer in DB from user input.
+  app.post("/api/beer", (req, res) => {
+    console.log(req.body);
+    userIdVal = parseInt(req.body.userId);
+    console.log(userIdVal);
+    db.Beer.create({
+      // eslint-disable-next-line camelcase
+      beer_name: req.body.beerName,
+      brewery: req.body.brewery,
+      UserId: userIdVal
+    })
+      .then(() => {
+        console.log("beer added to DB");
+      })
+      .catch(err => {
+        console.log(JSON.stringify(err));
+        res.status(401).json(err);
+      });
+  });
+
+  // Route for getting beers based on user id
+  app.get("/api/beers/:id/:brewery", (req, res) => {
+    db.Beer.findAll({
+      where: {
+        UserId: req.params.id,
+        brewery: req.params.brewery
+      }
+    }).then(beers => {
+      res.json(beers);
+    });
+  });
+
   // Route for getting all users for admin display
   app.get("/api/admin", (req, res) => {
     db.User.findAll({}).then(dbUsers => {
@@ -52,11 +84,8 @@ module.exports = function(app) {
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
-      // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
         name: req.user.name,
@@ -69,6 +98,7 @@ module.exports = function(app) {
     }
   });
 
+  // Route for deleting user on admin page
   app.delete("/api/admin/:id", (req, res) => {
     console.log(req.params.id);
     db.User.destroy({
@@ -80,34 +110,14 @@ module.exports = function(app) {
     });
   });
 
+  // Route for changing admin value of user.
   app.put("/api/admin/:id/:admin", (req, res) => {
     console.log(req.params.id);
-    if (req.params.admin === false) {
-      db.User.update(
-        {
-          admin: true
-        },
-        {
-          where: {
-            id: req.params.id
-          }
-        }
-      ).then(dbUsers => {
-        res.json(dbUsers);
-      });
-    } else {
-      db.User.update(
-        {
-          admin: false
-        },
-        {
-          where: {
-            id: req.params.id
-          }
-        }
-      ).then(dbUsers => {
-        res.json(dbUsers);
-      });
-    }
+    const id = req.params.id;
+    console.log(req.params.admin);
+    const adminVal = req.params.admin;
+    adminUpdate(id, adminVal).then(dbUsers => {
+      res.json(dbUsers);
+    });
   });
 };

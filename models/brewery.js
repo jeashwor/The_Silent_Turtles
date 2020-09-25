@@ -1,18 +1,18 @@
 // Creating our Brewery model
 module.exports = (sequelize, DataTypes) => {
   const Brewery = sequelize.define("Brewery", {
-    brewery_id: {
+    breweryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isInt: true
       }
     },
-    brewery_name: {
+    breweryName: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    street_location: {
+    streetLocation: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -23,15 +23,14 @@ module.exports = (sequelize, DataTypes) => {
         isDecimal: true
       }
     },
-    website_url: {
+    websiteUrl: {
       type: DataTypes.TEXT,
       allowNull: false
     }
   });
 
   Brewery.associate = function(models) {
-    Brewery.hasMany(models.Beers, { as: "beers" });
+    Brewery.hasMany(models.Beer, { as: "beer" });
   };
   return Brewery;
 };
-

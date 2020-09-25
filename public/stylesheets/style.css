@@ -13,17 +13,50 @@ background-size: cover;
 transition: 1s opacity;
 }
 
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+}
+
+th {
+  height: 100%;
+  width: auto;
+  padding: 20px !important;
+  text-align: center;
+  vertical-align: bottom;
+}
+
+tr {
+  margin-top: 5px;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid black;
+}
+
 #map {
   height: 600px !important;
   position: fixed;
 }
 
+.label {
+  background-color: rgb(255,188, 0);
+}
 .navbar {
   background-color: rgb(255,188, 0);
 }
 
 .navbar-brand {
   color: black;
+}
+
+.beenThere {
+  font-size: 10px !important;
+  padding: 5px !important;
+  margin: 10px;
 }
 
 form.signup,
