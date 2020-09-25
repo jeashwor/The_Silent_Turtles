@@ -5,16 +5,16 @@ let markers = [];
 // eslint-disable-next-line prefer-const
 let userVals = [];
 
-async function getMemberZip() {
-  if (!nonMemberZipCode) {
-    $.get("/api/user_data").then(user => {
-      memberZip = user.zipCode;
-      return memberZip;
-    });
-  } else {
-    memberZip = nonMemberZipCode;
-  }
-}
+// async function getMemberZip() {
+//   if (!nonMemberZipCode) {
+//     $.get("/api/user_data").then(user => {
+//       memberZip = user.zipCode;
+//       return memberZip;
+//     });
+//   } else {
+//     memberZip = nonMemberZipCode;
+//   }
+// }
 
 $("#brewButton").click(event => {
   event.preventDefault();
@@ -22,8 +22,34 @@ $("#brewButton").click(event => {
   markers = []; // deletes the old markers when user types in a new ZipCode
   userVals = []; // this allows the map to relocate to the newly entered ZipCode
   nonMemberZipCode = $("#nonMemberZipCode").val();
-  // memberZip = nonMemberZipCode;
-  userZipCode(nonMemberZipCode).then(gatherData());
+  memberZip = nonMemberZipCode;
+  userZipCode(nonMemberZipCode).then(
+    userZipCode(nonMemberZipCode)
+      .then(res => {
+        const state = res.places[0].state;
+        const city = res.places[0]["place name"];
+        return breweries(city, state);
+      })
+      .then(breweryList => {
+        breweryList.forEach(brewery => {
+          $("#breweries").append("<li><span> " + brewery.name + "</span></li>");
+          const markerObj = {
+            lat: brewery.latitude,
+            lng: brewery.longitude,
+            name: brewery.name,
+            url: brewery.website_url
+          };
+          markers.push(markerObj);
+        });
+        newInitMap(userVals);
+      })
+      .catch(err => {
+        if (err) {
+          alert("Please enter a valid United States Zip Code");
+          console.log(err);
+        }
+      })
+  );
   $("#nonMemberZipCode").val("");
 });
 
@@ -51,45 +77,6 @@ async function userZipCode(zipCode) {
     console.log(err);
     return err;
   }
-}
-
-async function gatherData() {
-  getMemberZip().then(
-    userZipCode(memberZip)
-      .then(res => {
-        const state = res.places[0].state;
-        const city = res.places[0]["place name"];
-        return breweries(city, state);
-      })
-      .then(breweryList => {
-        breweryList.forEach(brewery => {
-          const text = "Been there?";
-          $("#breweries").append(
-            "<li><span> " +
-              brewery.name +
-              "</span><button type='button' class='btn btn-info btn-lg beenThere' id='" +
-              brewery.name +
-              "'>" +
-              text +
-              "</button></li>"
-          );
-          const markerObj = {
-            lat: brewery.latitude,
-            lng: brewery.longitude,
-            name: brewery.name,
-            url: brewery.website_url
-          };
-          markers.push(markerObj);
-        });
-        newInitMap(userVals);
-      })
-      .catch(err => {
-        if (err) {
-          alert("Please enter a valid United States Zip Code");
-          console.log(err);
-        }
-      })
-  );
 }
 
 function newInitMap(userVals) {
@@ -133,9 +120,4 @@ function newInitMap(userVals) {
       });
     });
   }
-}
-
-// eslint-disable-next-line no-unused-vars
-async function worthAShot(userVals) {
-  gatherData();
 }

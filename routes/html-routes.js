@@ -24,7 +24,7 @@ module.exports = function(app) {
   });
 
   app.get("/nonMember", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/mapmarker.html"));
+    res.sendFile(path.join(__dirname, "../public/nonMember.html"));
   });
 
   app.get("/admin", isAdmin, (req, res) => {

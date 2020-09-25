@@ -21,6 +21,7 @@ $(document).ready(() => {
       breweryName: breweryName[0].innerHTML,
       user: userID
     };
+    console.log(beerData.user);
     await $.post("/api/beer", {
       beerName: beerData.beerName,
       brewery: beerData.breweryName,
@@ -41,13 +42,9 @@ $(document).ready(() => {
       id: userID,
       brewery: breweryName[0].innerHTML
     }).then(data => {
-      console.log(data);
       favBeer.text("");
       if (data.length === 0) {
         favBeerList[0].hidden = true;
-        data.forEach(beers => {
-          favBeer.append("<li>" + beers.beer_name + "</li>");
-        });
       } else {
         favBeerList[0].hidden = false;
         data.forEach(beers => {
@@ -64,6 +61,7 @@ $(document).ready(() => {
   $(document).on("click", "#submitBtn", event => {
     event.preventDefault();
     getBeerData().then(modalVal.modal("toggle"));
+    beerInput.val("");
   });
 
   $(document).on("click", ".beenThere", function(event) {
