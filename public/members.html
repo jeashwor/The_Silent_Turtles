@@ -5,8 +5,8 @@
   <title>BREWS - Member</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link href="stylesheets/style.css" rel="stylesheet">
   <script type="text/javascript">
     let memberZip = "{{memberZip}}"; //this may not be necessary
@@ -64,6 +64,19 @@
         </ul>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 pt-3">
+        <p class="text-center">When you sign in, the map will show you the Breweries in <i>your</i> Zip Code. <img src="assets/favicon-32x32.png"><br>If you want to see the Breweries in any Zip Code, type it in below!</p>
+      </div>
+    </div>
+    <form class="col-lg-6 offset-lg-3 pt-1">
+      <div class="row justify-content-center pb-4">
+        <input type="text" placeholder="Zip Code" id="nonMemberZipCode">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" id="brewButton">Show me the Brews!</button>
+        </span>
+      </div>
+    </form>
 
   </div>
 
