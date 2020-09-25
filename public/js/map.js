@@ -52,7 +52,6 @@ async function userZipCode(zipCode) {
 
 // eslint-disable-next-line no-unused-vars
 const assignBrewery = id => {
-  console.log(id);
   $(".breweryName").text(id);
 };
 

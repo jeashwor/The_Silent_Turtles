@@ -20,6 +20,7 @@ $("#submitBtn").on("click", event => {
     brewery: beerData.breweryName
   })
     .then(() => {
+      getBeers(beerData);
       console.log("Is this working?");
     })
     .catch(err => {
@@ -28,3 +29,18 @@ $("#submitBtn").on("click", event => {
       }
     });
 });
+
+const getBeers = () => {
+  $.get("/api/beerlist").then(data => {
+    if ($("#favoriteBeers")[0].hidden === true) {
+      $("#favoriteBeers")[0].hidden = false;
+      data.forEach(beers => {
+        $(".favoriteBeers").append("<p>" + beers + "</p>");
+      });
+    } else {
+      data.forEach(beers => {
+        $(".favoriteBeers").append("<p>" + beers + "</p>");
+      });
+    }
+  });
+};
