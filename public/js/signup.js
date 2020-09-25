@@ -50,8 +50,8 @@ $(document).ready(() => {
       .catch(handleLoginErr);
   }
 
-  function handleLoginErr(err) {
-    $("#alert .msg").text(err.responseJSON);
+  function handleLoginErr() {
+    $("#alert .msg").text("Please enter a valid United States Zip Code");
     $("#alert").fadeIn(500);
   }
 });
